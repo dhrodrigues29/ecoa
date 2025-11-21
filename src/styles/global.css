@@ -1,0 +1,96 @@
+/* src/styles/global.css */
+
+/* 1. hard reset */
+* { box-sizing: border-box; }
+
+/* 2. full-bleed root */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* 3. brand / theme tokens */
+:root {
+  --bg: linear-gradient(135deg, #c624b9 0%, #420b49 100%);;
+  --text: #f3d7d7;
+  --accent: #00c3ff;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* 4. iOS safe-area helpers for Capacitor */
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+
+/*Reset*/
+/* 1. remove default margins & padding */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+/* 2. sensible defaults */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-roboto);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  color: var(--color-text-main-main);
+  background-color: var(--color-surface);
+}
+
+/* 3. fluid type scale – one rule per heading */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  color: inherit;
+}
+
+h1 { font-size: clamp(var(--fs-2xl), 1.2rem + 2.5vw, var(--fs-4xl)); }
+h2 { font-size: clamp(var(--fs-xl), 1rem + 2vw, var(--fs-3xl)); }
+h3 { font-size: clamp(var(--fs-lg), 0.9rem + 1.5vw, var(--fs-2xl)); }
+h4 { font-size: clamp(var(--fs-base), 0.8rem + 1vw, var(--fs-xl)); }
+
+/* 4. images & media never overflow */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* 5. remove list bullets when we use lists for layout */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-screen);
+  background: transparent; /* ← no solid colour */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 2rem);
+  pointer-events: none; /* map clicks pass through when hidden */
+}
+.screen > * { pointer-events: auto; } /* content is interactive */

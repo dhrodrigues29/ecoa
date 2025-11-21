@@ -1,0 +1,169 @@
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: linear-gradient(135deg, #c624b9 0%, #420b49 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+.content {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: #fff;
+  color: #222;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.heading {
+  font-family: 'Titan One', cursive;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin: 0;
+  text-align: center;
+}
+
+.planBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.label {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--purple-600, #a316b2);
+}
+
+.methodGroup { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.methodGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.method {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.method.active {
+  border-color: var(--purple-600, #a316b2);
+  background: #f5eefa;
+}
+
+.form { display: flex; flex-direction: column; gap: 1rem; }
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+}
+.input:focus {
+  border-color: var(--purple-600);
+}
+
+.info {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.back,
+.confirm {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.back {
+  background: transparent;
+  color: #666;
+  border: 1px solid #ccc;
+}
+.back:hover {
+  background: #eee;
+}
+
+.confirm {
+  background: var(--purple-600, #a316b2);
+  color: #fff;
+}
+.confirm:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.confirm:hover:not(:disabled) {
+  background: var(--color-action-hover, #420b49);
+}
+
+/* --- PIX section --- */
+.pixBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centre QR + button */
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.pixBox svg { /* the QR */
+  max-width: 90%; /* never overflow horizontally */
+  height: auto;
+  width: 260px; /* slightly bigger, scales down if needed */
+}
+
+.copyBtn {
+  width: max-content; /* shrink-to-fit */
+  margin: 0 auto; /* centre button */
+}
+
+/* --- card form --- */
+/* assume the form row that holds CVV has class="cvv" */
+.cvv {
+  max-width: 100%;
+}
+.cvv input {
+  width: 100%; 
+}
+
+@media (max-width: 480px) {
+  .methodGrid {
+    grid-template-columns: 1fr;
+  }
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

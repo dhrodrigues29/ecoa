@@ -1,0 +1,81 @@
+/* SearchBar.module.css – glass / desaturated beauty, vars only */
+@import '/src/styles/vars.css';
+
+.wrap { position: relative; }
+
+.pen {
+  --pen-height: clamp(2.25rem, 6vw, 3rem);
+  --cap-width: clamp(4rem, 12vw, 5rem);
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  box-shadow: 0 8px 32px rgba(0,0,0,.20);
+  border-radius: 2rem;
+}
+
+.input {
+  flex: 1 1 auto;
+  height: var(--pen-height);
+  padding: 1rem;
+  border: 2px solid var(--purple-400);
+  border-left: none;
+  border-radius: 2rem;
+  background: rgba(139,90,214,.20);
+  font-size: clamp(var(--fs-base), 3vw, var(--fs-lg));
+  color: var(--text-inverse);
+  box-shadow: 0 0 12px rgba(139,90,214,.30);
+  outline: none;
+}
+.input::placeholder { color: rgba(255,255,255,.80); }
+.input:focus { box-shadow: 0 0 0 2px rgba(255,255,255,.35); }
+
+.cap {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: var(--cap-width);
+  height: var(--pen-height);
+  border: 2px solid var(--purple-400);
+  border-right: none;
+  border-radius: 0 2rem 2rem 0;
+  background: rgba(139,90,214,.30);
+  box-shadow: 0 0 12px rgba(139,90,214,.30);
+  color: var(--text-inverse);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background var(--transition-fast);
+}
+.cap:hover { background: rgba(139,90,214,.45); }
+.cap:active { transform: scale(.96); }
+
+.arrow { font-size: clamp(var(--fs-lg), 4vw, var(--fs-xl)); }
+
+/* ---------- dropdown (kept functional) ---------- */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255,255,255,.95);
+  border: 1px solid rgba(255,255,255,.30);
+  max-height: 10rem;
+  overflow-y: auto;
+  z-index: var(--z-popover);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-radius: 0 0 1rem 1rem;
+  backdrop-filter: blur(4px);
+}
+.dropdown li {
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: background var(--transition-fast);
+}
+.dropdown li:hover { background: var(--neutral-100); }

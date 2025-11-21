@@ -1,0 +1,28 @@
+@import '/src/styles/vars.css';
+.backdrop {
+position: fixed;
+inset: 0;
+background: rgba(0, 0, 0, 0.6);
+display: grid;
+place-items: center;
+z-index: var(--z-modal);
+animation: fadeIn 0.3s ease;
+}
+.panel {
+background: var(--color-surface);
+color: var(--color-text-main-main);
+border-radius: var(--space-md);
+padding: var(--space-xl);
+max-width: min(90vw, 28rem);
+width: 100%;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+animation: slideUp 0.3s ease;
+}
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+@keyframes slideUp {
+from { transform: translateY(20px); opacity: 0; }
+to { transform: translateY(0); opacity: 1; }
+}

@@ -1,0 +1,331 @@
+/* ==========================================================
+   PARTNER SCREEN – CLEANED & RE-ORDERED
+   All selectors preserved; only re-grouped and de-duplicated.
+   ========================================================== */
+
+/* 1. GLOBAL LAYOUT
+----------------------------------------------------------- */
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-screen);
+  background: linear-gradient(135deg, #c624b9 0%, #420b49 100%);
+  color: #fff;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 2rem);
+  overflow-y: auto;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
+}
+
+.heading {
+  font-family: var(--font-titan);
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin: 0;
+}
+
+/* 2. TWO-COLUMN GRID
+----------------------------------------------------------- */
+.cardRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;   /* both rows sized by content */
+  gap: 1rem;
+  width: 100%;
+  min-height: 0;                   /* remove the 70vh choke */
+}
+
+.topRow {
+  display: grid;
+  grid-template-columns: 4fr 8fr;          /* 1:2 ratio – summary still bigger */
+  gap: 1rem;
+  height: 100%;                            /* fill the 1fr row */
+  min-height: 0;
+}
+
+/* 3. INPUT BUBBLE – compact & tidy
+----------------------------------------------------------- */
+.inputCard {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  margin: 0;
+  max-width: none;
+  background: var(--color-surface);
+  color: var(--color-text-main);
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow-y: visible;
+  border: 1px solid #ddd;
+  height: auto;
+}
+
+/* single input row – tight vertical rhythm */
+.idBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.idBox label {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--purple-700);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.idInput {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 2px solid var(--purple-600);
+  border-radius: 6px;
+  font-size: var(--fs-base);
+  background: var(--color-surface);
+  color: #222;
+  text-align: center;
+  outline: none;
+}
+.idInput::placeholder { color: var(--color-text-main-soft); }
+.idInput.empty { border-color: #e74c3c; }
+
+.warn {
+  color: #e74c3c;
+  font-size: var(--fs-xs);
+}
+
+/* visual-upgrade overrides (keep functionality) */
+.inputCard:first-child,
+.inputCard.inputCard--enhanced,
+.inputCard.enhanced {
+  padding: 1.25rem 1rem !important;
+  gap: 0.75rem !important;
+}
+.inputCard:first-child .idBox,
+.inputCard.inputCard--enhanced .idBox,
+.inputCard.enhanced .idBox {
+  gap: 0.25rem !important;
+  margin-bottom: 0 !important;
+}
+
+/* 4. PLANS BUBBLE
+----------------------------------------------------------- */
+/* 1. bubble hugs the title row exactly ----------------------- */
+/* 2. keep the plan row short – half-view-port max ---------- */
+.plansCard {
+  grid-column: 1;
+  grid-row: 2;
+  place-self: center stretch;
+  max-height: 35vh;                /* the half-height cap you already had */
+  overflow-y: auto;
+  background: var(--color-surface);
+  color: var(--color-text-main);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.25);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2. title strip – keep its own small padding -------------- */
+.plansCard .subHeading {
+  margin: 0;
+  padding: 0.75rem 1rem 0.5rem;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+}
+
+/* 3. card list – eats every pixel below the title ----------- */
+.plansCard .grid {
+  flex: 1 1 auto;                 /* fill remaining height AND width */
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  padding: 0 1rem 1rem;           /* side gutters only */
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  justify-content: space-between; /* spread when row is not full */
+  align-items: stretch;
+}
+
+/* 4. ultra-compact cards (already done) --------------------- */
+.plansCard .card {
+  flex: 1 1 auto;        /* share horizontal space, height = content */
+  max-width: 200px;      /* same upper cap as before */
+  min-height: 0;         /* allow natural shrink */
+  scroll-snap-align: start;
+  padding: 0.75rem;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+}
+
+/* plan cards */
+.card {
+  background: var(--color-surface);
+  color: var(--color-text-main-main);
+  border: none;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition: box-shadow 0.3s ease;
+}
+.card:hover { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); }
+
+.card.selected {
+  outline: none;
+  border: 2px solid var(--color-action);
+  background: linear-gradient(135deg, var(--purple-700) 0%, var(--purple-600) 100%);
+  color: #fff;
+}
+.card.selected .badge,
+.card.selected .price,
+.card.selected .perks { color: #fff; }
+
+.header { display: flex; justify-content: space-between; align-items: center; }
+
+.badge {
+  background: var(--color-action);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+
+.price { font-size: var(--fs-2xl); font-weight: 700; }
+
+.perks {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: var(--fs-sm);
+}
+.perks li { margin-bottom: 0.25rem; }
+
+.selected {
+  border: 3px solid var(--color-action);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35);
+}
+
+.previewBtn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--color-surface);
+  color: var(--color-action);
+  border: 1px solid var(--color-action);
+  border-radius: 6px;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.previewBtn:hover {
+  background: var(--color-action);
+  color: var(--color-surface);
+}
+
+/* 5. SUMMARY BUBBLE
+----------------------------------------------------------- */
+.summaryCard {
+  grid-column: 2;
+  grid-row: 1;                    /* already correct – just remove margin */
+  place-self: center;             /* centre inside the 8fr cell */
+  margin: 0;                      /* kill the 2rem push-down */
+  padding: 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.25);
+  overflow: hidden;
+  width: 100%;                    /* fill the column, capped by grid */
+  max-width: 768px;               /* your previous cap */
+  aspect-ratio: 768 / 432;
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-color: #fff;
+}
+
+.summaryOverlay {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.5rem 2rem 0.75rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(4px);
+}
+
+.summaryTitle {
+  margin: 0;
+  font-family: var(--font-titan);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--purple-700);
+}
+
+/* 6. ACTION BUTTONS
+----------------------------------------------------------- */
+.back,
+.proceed {
+  position: absolute;
+  bottom: -3rem;
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back {
+  left: 0;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+}
+.back:hover { background: #fff; color: var(--purple-700); }
+
+.proceed {
+  right: 0;
+  background: var(--color-action);
+  color: #fff;
+  border: none;
+  font-size: var(--fs-base);
+}
+.proceed:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+.proceed:active:not(:disabled) { transform: translateY(0); }
+.proceed:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* 7. RESPONSIVE
+----------------------------------------------------------- */
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; }
+  .inputCard { max-height: none; overflow-y: visible; }
+}
+
+@media (min-width: 769px) and (max-width: 1439px) {
+  .inputCard { max-height: none; overflow-y: auto; }
+}
+
+@media (min-width: 1440px) {
+  .content { max-width: 1280px; }
+}

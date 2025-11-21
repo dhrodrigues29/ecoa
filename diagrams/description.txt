@@ -1,0 +1,126 @@
+im unfamiliar with plantuml documentation, therefore ill write in common language each screen actions and youll ask me questions of what of the information i wrote u still have not fully understand, then, once i respond you all your questions, youll create the file that will be read by the plantuml extension and create the visible diagram.
+
+common text descriptions:
+
+  - id: access_url
+    label: "Access Project URL"
+    type: start
+
+  - id: home_screen
+    label: "Home Screen"
+    interactive elements:
+      1. Search Bar
+      2. Enter Button
+      3. Become partner button
+      obs: all are visible from start
+
+    actions:
+      Click enter button -> map screen, no carry info
+      Click Search bar -> search bar waiting input display
+        then: if typing anything, dropdown list show suggested searchs
+              if no typing and click enter button or press enter in keyboard, go to map screen, no carry info
+              if typed something and click enter button or press enter in keyboard, go to map screen if typed info as carry
+              if typed something and clicked item in the suggestion dropdown, got to map screen and carry the item clicked in the dropdown list info
+            obs: carry info will be used to determine longitude and latitude of the first rendered map.
+      Click become partner button -> go to become partner screen.      
+
+  - id: partner_screen
+    label: "Become a Partner Screen"
+    interactive elements:
+      1. Search bar
+      2. Instagram Search bar
+      3. Contact Input Text Box
+      4. Plans Cards Buttons (3 buttons, one for each plan)
+      5. Continue to Payment Method Button (not clickable until all bars are filled and plan card selected)
+      6. go back to home screen button
+      obs: all are visible from start
+
+      7. See it in the Map Button (visible and clickable once all bars are filled and plan card is selected) (again, one for each choosed plan)
+
+
+    actions:
+      Click Search Bar -> Search bar waiting input display
+      Input text in the search bar from keyboard -> dropdown list with related suggestions
+      Clicking item on dropdown list -> item becomes visibly selected
+      filling the search bar and not clicking an item because no item match the input -> item becomes visibly selected (is a new item to be added)
+      The Instagram search bar has exactly the same bahviour as the search bar.
+      The contact input box shows that it is correctly filled if the input ends in @something.something
+
+      Clicking any card plan button display that card plan as selected
+
+      once all this tree steps are done, the button continue to payment is now clickable
+      once all this tree steps are done, the button see it on the map, for the selected plan card, becomes visible and clickable
+      clicking continue to payment -> confirma payment screen, carrying the info inputed and plan card picked
+      clicking see it on the map -> map screen, with search made and map displaying in the lon and lat of the item selected in search bars, visible AS IF the plan was alredy payed, for the user to see how its item will be displayed on the map if the user pays for that plan.
+      clicking back to home button -> home screen
+      clicking back to partner plan, after going to the map by clicking see it on the map -> partner screen, all info filled stay filled and save.
+
+  - id: confirm_payment_screen
+    label: "Confirm Payment Screen"
+    interactive elements:
+      1.Credit card tab button
+        1.1 input texts bar for credit card info; number, name, number, cvv, espiration date.
+      2. Pix tab button
+        2.1 copy qr code button
+      3. Boleto tab button
+        3.1 download boleto button
+        3.2 copy boleto number line button
+      4. back to partner screen (all filled info should still be there)
+      obs: all are always visible, but the elements inside each tab button are only visible if such tab is selected.
+
+      5. Confirm Payment button, visible after credit card info is filled corectly. -> home screen + pop up message "Payment Confirmed, Thank You!"
+      6. Confirm payment button for pix and boleto, always visible if one of those two tabs where selected -> home screen + pop up message "Payment Confirmed, Thank You!"
+
+    actions:
+      were discribed in the interactive elements.
+
+  - id: map_screen
+    label: "Map Screen"
+    interactive elements:
+      1. back to home button -> home screen
+      2. search bar
+      3. enter button
+      4. advanced search button
+      5. tags bar
+      6. POI Clickable markers
+      7. zoom in, zoom out button
+      8. the whole displayed map it self is interactable via user input from mouse
+
+    actios:
+      click search bar -> search bar waits for input display
+      input from keyboard into search bar -> dropdwon list show suggestions
+      clicking enter button with some input in the bar/clicking enter on keyboard with some input in the bar/clicking item in dropdown suggetions list -> make the search and map flyto centering the poi marker item in the screen
+      if typed input does not corresponde to any suggestion, search bar blinks read and pop up mesage say no matchs
+      same bahviour if blank search is made
+      clicking a tag in the tags list make the clicked tag becomes visible selected and filters the poi markers to only display in the map those who also have such selected tag in their own tags list
+      clicking multiple tags in tags list works as a multiple filter and only poi markers who have all selected tags are disaplyed
+      if a combination of selected tags return no poi marker, pop up message shows saying this.
+      clicking advanced search button opens a window to make an advanced search seein all possible tags divided in tabs and another search bar to search for tags to include in the filter advanced search.
+      this advacned search windows has 3 main buttons, besides tags buttons, tags tabs ams search tags line, they are the search button, the cancel and the x to exit this window
+      search button -> map screen carrying the selected tags to dispaly the poi markers wich actually have those tags in the advanced search.
+      cancel button -> resets the tags selected and go back to map screen
+      x button ->map screen but do not apply the tags search neither diselect them from advances search window, so if openned again, previous selected tags are still saved and a search may be done using them, if user clicks search.
+
+      clicking a poi marker on the map open the full card info of that poi. (the behaviour of the full card info will be describbed later)
+      clicking a poi makes that poi become visibly selected
+      clicking the x in the full card of a poi -> map screen
+
+    - id: full_card
+    label: "Full Card"
+    interactive elements:
+        1. X button
+        2. Main Image
+        3. Scrollable body
+        4. Hiperlink
+        5. Hiperlink (to instagram)
+        6. Navigation Arrow Left
+        7. Navigation Arrow Right
+        8. See Latest Publication Button
+    actions:
+
+        1. X button if clicked stop displaying the full card and we are back on the map screen
+        2. Main image works as lightbox button, clicking it shows the main image of the poi full size, there is also a x button to close this image and go back to the full card view
+        3. the body is scrolable because it has textual info separated by semi titles/categories, two of those semi titles are 'site' and 'instagram' and each has a clickable hyperlink that leads to the poi site and poi instagram page respectly
+        6. the arrows, when clicked, fly to centering the next poi on the list on the screen and displays the full card of the new poi instead of the full card of the earlier poi, it works the same for the right arrow but goes to the other element of the list
+        8. see last publications button also display lightbox full images of the latest publication of that poi instagram page, also with x button to close but now with its on left right arrows to navigate thro the latets publications of that poin instagram page.
+        

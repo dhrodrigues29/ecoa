@@ -1,0 +1,41 @@
+reunião:
+
+
+mapear a jornada
+
+os requisitos
+
+
+doc de tccs tem mais dicas do foco doq escrever.
+
+
+oqq a gente entende por evento?
+
+
+não tem a terceira pessoa do plurar, oberseva-se, garante-se.
+
+
+na introdução, os msm tempo  estou desenvolvimenoto uma sol de negocio como eu aproximo esses dois mundos, um dos objetivos quais tecnologias e arq de software eu posso indicar para garantir um
+
+falar sobre ágil na fundametacao teórica.
+
+matriz cscd
+
+contar a historia do tcc: como acontece hoje 
+
+mostrar os requisitos em um caso de uso.
+ 
+
+referencias, quais são meus requisitos e a forma de screver em terceira pessoa do plural
+escrever oq o sistema tem comprada com os outrsoq eu fazem parte do becnhmark/entregam parte do serviço
+
+tcc Leandro de Souza rodrigues
+
+bovinos
+
+seprar oq são as tecnologias front ent back ent banco de dados e api
+
+definição das funcionalidades essenciais - isso são requisitos?
+
+
+https://www.lume.ufrgs.br/handle/10183/279140

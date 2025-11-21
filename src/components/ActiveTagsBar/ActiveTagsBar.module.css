@@ -1,0 +1,36 @@
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.bubble {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--magenta-500) 0%, var(--purple-500) 100%);
+  box-shadow: 0 4px 12px -4px var(--magenta-700);
+}
+
+.label {
+  color: var(--text-inverse);
+  font-family: var(--font-roboto);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* keep existing tag pressed look, but ensure text stays readable inside bubble */
+:global(.poiMarker) /* or whatever global class your Button renders */
+.bubble .pressed {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--text-inverse);
+}

@@ -1,0 +1,108 @@
+/* vars.css – new high-contrast plan colours + gradients */
+:root {
+  /* ======  EXTENDED PURPLE SPECTRUM  ====== */
+  --magenta-start: #c624b9;
+  --purple-end: #420b49;
+
+  /* ======  MAGENTA → PURPLE SPECTRUM  ====== */
+  /* magenta side (hot) */
+  --magenta-50: #fce7f3;
+  --magenta-100: #fbcfe8;
+  --magenta-200: #f9a8d4;
+  --magenta-300: #f472b6;
+  --magenta-400: #ec4899;
+  --magenta-500: #db2777;
+  --magenta-600: #c624b9;
+  /* brand hero */
+  --magenta-700: #a21caf;
+  --magenta-800: #86198f;
+  --magenta-900: #701a75;
+  --magenta-950: #4c0519;
+
+  /* purple side (cool) */
+  --purple-50: #faf5ff;
+  --purple-100: #f3e8ff;
+  --purple-200: #e9d5ff;
+  --purple-300: #d8b4fe;
+  --purple-400: #c084fc;
+  --purple-500: #a855f7;
+  --purple-600: #9333ea;
+  --purple-700: #7e22ce;
+  --purple-800: #6b21a8;
+  --purple-900: #581c87;
+  --purple-950: #420b49;
+  /* brand anchor */
+
+  /* neutral & text */
+  --neutral-000: #ffffff;
+  --neutral-100: #f8fafc;
+  --neutral-200: #f1f5f9;
+  --neutral-900: #0f172a;
+
+  --text-primary: #0f172a;
+  --text-inverse: #ffffff;
+  --text-subtle: #94a3b8;
+
+  /* ======  SEMANTIC ALIASES  ====== */
+  --color-action: var(--purple-500);
+  --color-action-hover: var(--purple-600);
+  --color-surface: var(--neutral-000);
+  --color-bg: var(--neutral-000);
+  --color-text-main-main: var(--text-primary);
+  --color-text-main-soft: var(--text-subtle);
+  --color-input-placeholder: var(--text-subtle);
+
+  /* ======  SPACING & TYPOGRAPHY  ====== */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.563rem;
+  --fs-2xl: 1.953rem;
+  --fs-3xl: 2.441rem;
+  --fs-4xl: 3.052rem;
+
+  --gutter: clamp(var(--space-md), 4vw, var(--space-xl));
+  --font-roboto: "Roboto", sans-serif;
+  --font-coiny: "Coiny", cursive;
+  --font-revalia: "Revalia", sans-serif;
+  --font-cherry: "Cherry Bomb One", cursive;
+  --font-titan: "Titan One", cursive;
+
+  --transition-fast: 0.4s ease;
+  --transition-slow: 0.8s ease;
+
+  --z-map: 0;
+  --z-map-ui: 1000;
+  --z-screen: 2000;
+  --z-modal: 3000;
+  --z-popover: 4000;
+  --z-urgent: 5000;
+  --z-max: 2147483647;
+
+  /* ======  PLAN SYSTEM – wide-interval gradients  ====== */
+  --plan-none-bg: linear-gradient(135deg, var(--neutral-000) 0%, var(--magenta-100) 100%);
+  --plan-none-border: var(--magenta-300);
+  --plan-none-glow: 0 0 6px var(--magenta-200);
+
+  --plan-basico-bg: linear-gradient(135deg, var(--magenta-200) 0%, var(--magenta-400) 100%);
+  --plan-basico-border: var(--magenta-500);
+  --plan-basico-glow: 0 0 10px var(--magenta-300);
+
+  --plan-intermediario-bg: linear-gradient(135deg, var(--purple-700) 0%, var(--purple-900) 100%);
+  --plan-intermediario-border: var(--purple-900);
+  --plan-intermediario-glow: 0 0 20px var(--purple-700);
+
+  --plan-premium-bg: linear-gradient(135deg, var(--magenta-500) 0%, var(--purple-500) 100%);
+  --plan-premium-border: var(--magenta-700);
+  --plan-premium-glow: 0 0 14px var(--magenta-500);
+
+}

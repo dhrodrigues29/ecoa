@@ -1,0 +1,39 @@
+/* Button.module.css – glassy / desaturated beauty, vars only */
+@import '/src/styles/vars.css';
+
+.btn {
+  --_height: clamp(2.5rem, 7vw, 3rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  height: var(--_height);
+  padding-inline: var(--space-lg);
+  font-family: var(--font-roboto);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-inverse);
+  background: rgba(139,90,214,.5);           /* glass base */
+  border: 2px solid var(--purple-500);
+  border-radius: var(--_height);
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 20px rgba(139,90,214,.35);  
+  transition: background var(--transition-fast),
+              border-color var(--transition-fast),
+              transform var(--transition-fast);
+}
+.btn:hover {
+  background: rgba(139,90,214,.80);
+  border-color: var(--purple-300);
+  box-shadow: 0 0 16px rgba(139,90,214,.50);
+}
+.btn:active {
+  transform: scale(0.96);
+}
+.btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.10);
+}

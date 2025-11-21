@@ -1,0 +1,98 @@
+@startuml
+title COMPLETE USER FLOW – STATE MACHINE DIAGRAM
+
+[*] --> Access_URL
+
+state Access_URL {
+  :Access Project URL;
+  --> Home_Screen
+}
+
+state Home_Screen {
+  [*] --> Idle
+  state Idle {
+    :Visible elements: Search Bar, Enter Button, Become Partner Button;
+
+    --> Map_Screen : Click "Enter" (carry: SearchQuery|null)
+    --> Map_Screen : Click "Search Bar" → type → click suggestion / press enter (carry: SearchQuery)
+    --> Partner_Screen : Click "Become Partner"
+  }
+}
+
+state Partner_Screen {
+  [*] --> Idle
+  state Idle {
+    :Visible elements: All inputs and buttons (6 total);
+    :Waiting for input...;
+
+    --> Payment_Ready : All bars filled + plan selected
+    --> Home_Screen : Click "Back" (retain state)
+  }
+
+  state Payment_Ready {
+    :Continue to Payment button enabled;
+    :See It On Map button visible;
+    --> Confirm_Payment_Screen : Click "Continue to Payment" (carry: PartnerInfo)
+    --> Map_Screen : Click "See It On Map" (carry: PartnerInfo) [Preview Mode]
+  }
+}
+
+state Confirm_Payment_Screen {
+  [*] --> Tab_Choice
+
+  state Tab_Choice {
+    :Choose payment method;
+    --> Credit_Tab : Click "Credit Card"
+    --> Pix_Tab : Click "Pix"
+    --> Boleto_Tab : Click "Boleto"
+    --> Partner_Screen : Click "Back" (retain state)
+  }
+
+  state Credit_Tab {
+    :Fill card info;
+    --> Confirmed : Click "Confirm Payment"
+    note right: Popup: "Payment Confirmed, Thank You!"
+  }
+
+  state Pix_Tab {
+    :Copy QR Code;
+    --> Confirmed : Click "Confirm Payment"
+    note right: Popup: "Payment Confirmed, Thank You!"
+  }
+
+  state Boleto_Tab {
+    :Download or Copy Boleto;
+    --> Confirmed : Click "Confirm Payment"
+    note right: Popup: "Payment Confirmed, Thank You!"
+  }
+
+  Confirmed --> Home_Screen
+}
+
+state Map_Screen {
+  [*] --> Viewing
+  state Viewing {
+    :Elements: Search bar, Enter button, Tags, POIs, etc.;
+    --> Viewing : Input → Suggestions → Selection (carry: SearchQuery)
+    --> Viewing : Click Tag (filter)
+    --> Viewing : Click Multiple Tags (multi-filter)
+    --> Viewing : Invalid Search → Popup "No Matches"
+    --> Advanced_Search_Window : Click "Advanced Search"
+    --> POI_Full_Card : Click POI Marker
+    --> Home_Screen : Click "Back" (retain state)
+  }
+
+  state Advanced_Search_Window {
+    :Modal visible;
+    --> Viewing : Click "Search" (carry: SelectedTags)
+    --> Viewing : Click "Cancel" (reset filters)
+    --> Viewing : Click "X" (retain selections)
+  }
+
+  state POI_Full_Card {
+    :POI details visible;
+    --> Viewing : Click "X"
+  }
+}
+
+@enduml

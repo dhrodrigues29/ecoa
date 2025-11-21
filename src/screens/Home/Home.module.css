@@ -1,0 +1,202 @@
+/* src/screens/Home/Home.module.css – clean, single-responsibility blocks */
+@import '/src/styles/vars.css';
+@import '/src/components/PoiMarker/PoiMarker.module.css';
+
+/* ---------- 1.  page shell  ------------------------------------ */
+.home {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--gutter);
+  background: linear-gradient(135deg, #c624b9 0%, #420b49 100%);
+  color: var(--text-inverse);
+  z-index: var(--z-screen);
+}
+
+/* ---------- 2.  top content  ----------------------------------- */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: var(--space-md);
+  padding-block: clamp(var(--space-lg), 3vh, var(--space-2xl)) 0;
+}
+
+.logo {
+  font-family: var(--font-titan);
+  font-size: clamp(var(--fs-3xl), 14vw, 10rem);
+  line-height: 1.2;
+  margin: clamp(var(--space-2xl), 10vh, 8rem) 0 0;
+  color: var(--text-inverse);
+  -webkit-text-stroke: 2px rgba(255,255,255,.25);
+  text-shadow: 0 2px 24px rgba(0,0,0,.25);
+}
+
+.tagline {
+  font-size: clamp(var(--fs-lg), 2.5vw, var(--fs-xl));
+  margin-bottom: var(--space-xs);
+  text-align: center;
+  color: rgba(255,255,255,.70);
+}
+
+/* ---------- 3.  search bar  ------------------------------------ */
+.form { display: flex; gap: var(--space-sm); }
+
+.searchWrap {
+  width: min(95vw, 48rem);               /* longer on home */
+  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,.20);
+}
+
+.searchPen {
+  --pen-height: clamp(3rem, 7vw, 3.75rem);
+  --cap-width: clamp(8rem, 18vw, 9em);
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input {
+  flex: 1 1 auto;
+  height: var(--pen-height);
+  padding: 0 var(--space-md) 0 calc(var(--cap-width) + var(--space-sm));
+  border: 2px solid rgba(255,255,255,.20);
+  border-left: 2px solid rgba(255,255,255,.20);   /* complete border */
+  border-radius: 2rem;
+  background: rgba(255,255,255,.10);
+  font-size: clamp(var(--fs-base), 4vw, var(--fs-lg));
+  color: var(--text-inverse);
+  outline: none;
+}
+.input::placeholder { padding-left: var(--space-xs); color: rgba(255,255,255,.55); }
+.input:focus { box-shadow: 0 0 0 2px rgba(255,255,255,.35); }
+
+.searchCap {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: var(--cap-width);
+  height: var(--pen-height);
+  border: none;                               /* ← no border at all */
+  border-radius: 0 var(--pen-height) var(--pen-height) 0;
+  background: rgba(255,255,255,.12);
+  color: var(--text-inverse);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background var(--transition-fast);
+}
+.searchCap:hover { background: rgba(255,255,255,.20); }
+.searchCap:active { transform: scale(.96); }
+
+.arrow { font-size: clamp(var(--fs-lg), 5vw, var(--fs-xl)); }
+
+/* ---------- 4.  partner CTA  ----------------------------------- */
+.partnerCall {
+  margin-top: clamp(var(--space-3xl), 18vh, 12rem);
+  font-family: var(--font-roboto);
+  font-size: clamp(var(--fs-lg), 4vw, var(--fs-2xl)); /* readable, not gigantic */
+  font-weight: 600;
+  color: var(--text-inverse);
+  text-align: center;
+  text-shadow: 0 2px 16px rgba(0,0,0,.25);
+}
+
+.partnerBtn {
+  align-self: center;
+  padding: var(--space-sm) var(--space-xl);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  border-radius: 2rem;
+  background: var(--plan-premium-bg);
+  color: var(--text-inverse);
+  border: 2px solid rgba(255,255,255,.35);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+.partnerBtn:hover {
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.60);
+  transform: scale(1.03);
+}
+.partnerBtn:active { transform: scale(.98); }
+
+/* 4-star burst – 2 pairs, 0.3 s apart, 1.2 s loop */
+.partnerBtn::before,
+.partnerBtn::after { /* existing pair */
+  animation: partnerSpark 1.2s infinite;
+}
+.partnerBtn::before { left: 2%; top: 2.5%; animation-delay: 0s; }
+.partnerBtn::after  { right: 2%; bottom: 2.5%; animation-delay: 0.6s; }
+
+/* second pair – same keyframes, new delays */
+.partnerBtn {
+  overflow: hidden;
+  position: relative;
+}
+.partnerBtn {
+  overflow: hidden;
+}
+.partnerBtn::before,
+.partnerBtn::after,
+.partnerBtn i::before,
+.partnerBtn i::after {                /* extra pair via <i> */
+  content: "✦";
+  position: absolute;
+  font-size: .75rem;
+  color: #ffffff;
+  filter: drop-shadow(0 0 6px #ffffff);
+  animation: partnerSpark 1.2s infinite;
+}
+/* first pair */
+.partnerBtn::before { left: 2%; top: 2.5%; animation-delay: 0s; }
+.partnerBtn::after  { right: 2%; bottom: 2.5%; animation-delay: 0.3s; }
+/* second pair */
+.partnerBtn i::before { left: 50%; top: 1.5%; animation-delay: 0.6s; }
+.partnerBtn i::after  { right: 50%; bottom: 1.5%; animation-delay: 0.9s; }
+
+@keyframes partnerSpark {
+  0%  { transform: scale(0) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1) rotate(180deg); opacity: 1; }
+  100%{ transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+/* ---------- 5.  footer  ---------------------------------------- */
+.footer {
+  padding: var(--space-md) 0 var(--space-lg);
+  font-size: var(--fs-xs);
+  color: rgba(255,255,255,.50);
+  font-weight: 300;
+}
+
+/* ---------- 6.  loader  ---------------------------------------- */
+.loader {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #c624b9 0%, #420b49 100%);
+  z-index: var(--z-screen);
+}
+
+.spinner {
+  --_size: 20vmin;
+  width: var(--_size);
+  height: var(--_size);
+  opacity: .7;
+  filter: blur(1px);
+  background: var(--color-action);
+  border-radius: 50%;
+  animation: initialPulse 0.6s ease-out, rippleWave 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}

@@ -1,0 +1,85 @@
+@startuml
+title COMPLETE USER FLOW – ACTIVITY DIAGRAM
+
+start
+:Access Project URL;
+
+partition "Home Screen" {
+  :Display: Search Bar, Enter Button, Become Partner Button;
+  if ("User action") then
+    -> Click "Enter";
+    :Go to Map Screen (carry: SearchQuery|null);
+  elseif ("Click Search Bar") then
+    :Typing... Suggestions shown;
+    :Click suggestion OR press Enter;
+    :Go to Map Screen (carry: SearchQuery);
+  elseif ("Click Become Partner") then
+    :Go to Partner Screen;
+  endif
+}
+
+partition "Partner Screen" {
+  :Display: Search Bars, Instagram Input, Contact Input, Plan Buttons;
+  if ("All inputs filled + Plan selected") then
+    :Continue to Payment enabled;
+    :See It On Map visible;
+    if ("Click Continue to Payment") then
+      :Go to Confirm Payment Screen (carry: PartnerInfo);
+    elseif ("Click See It On Map") then
+      :Go to Map Screen (carry: PartnerInfo) [Preview Mode];
+    endif
+  elseif ("Click Back") then
+    :Return to Home Screen (retain state);
+  endif
+}
+
+partition "Confirm Payment Screen" {
+  :Tabs visible: Credit, Pix, Boleto;
+  if ("Credit Tab") then
+    :Fill card info;
+    :Confirm Payment;
+    note right: Popup: "Payment Confirmed, Thank You!";
+    :Go to Home Screen;
+  elseif ("Pix Tab") then
+    :Copy QR code → Confirm Payment;
+    note right: Popup: "Payment Confirmed, Thank You!";
+    :Go to Home Screen;
+  elseif ("Boleto Tab") then
+    :Download / Copy boleto → Confirm Payment;
+    note right: Popup: "Payment Confirmed, Thank You!";
+    :Go to Home Screen;
+  elseif ("Back") then
+    :Return to Partner Screen (retain state);
+  endif
+}
+
+partition "Map Screen" {
+  :Visible elements: Map, Search, Tags, POIs, Zoom, Advanced Search;
+  if ("Search") then
+    :Type → Suggestion → Enter;
+    :Show POIs (carry: SearchQuery);
+  elseif ("Invalid Search") then
+    note right: Popup: "No Matches";
+  elseif ("Click Advanced Search") then
+    :Open Advanced Search Window;
+    if ("Click Search") then
+      :Return to Map with Filter (carry: SelectedTags);
+    elseif ("Cancel") then
+      :Reset filters;
+    elseif ("X") then
+      :Close window (retain selections);
+    endif
+  elseif ("Click POI Marker") then
+    :Open POI Full Card;
+  elseif ("Back") then
+    :Return to Home Screen (retain state);
+  endif
+}
+
+partition "POI Full Card" {
+  :Display POI Info;
+  :Click X → Return to Map Screen;
+}
+
+stop
+@enduml

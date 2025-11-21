@@ -1,0 +1,84 @@
+@import '/src/styles/vars.css';
+.marker {
+/* MapLibre expects 20×20 px */
+width: 20px;
+height: 20px;
+border: none;
+background: transparent;
+cursor: pointer;
+position: relative;
+animation: initialPulse 0.6s ease-out;
+}
+
+/* coloured dot */
+.marker::before {
+content: '';
+position: absolute;
+inset: 0;
+border-radius: 50%;
+background: var(--color-action);
+}
+
+/* expanding ripple */
+.marker::after {
+content: '';
+position: absolute;
+inset: -4px;
+border-radius: 50%;
+border: 2px solid var(--color-action);
+animation: rippleWave 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ======  basico (planLevel = 1)  ====== */
+.marker[data-plan="1"]::before {
+  background: var(--plan-basico-bg);
+  box-shadow: var(--plan-basico-glow);
+}
+.marker[data-plan="1"]::after {
+  border-color: var(--plan-basico-border);
+}
+
+/* ======  intermediario (planLevel = 2)  ====== */
+.marker[data-plan="2"] {
+  width: 24px;
+  height: 24px;
+}
+.marker[data-plan="2"]::before {
+  background: var(--plan-intermediario-bg);
+  box-shadow: var(--plan-intermediario-glow);
+}
+.marker[data-plan="2"]::after {
+  border-color: var(--plan-intermediario-border);
+  animation: rippleWave var(--plan-intermediario-ring-duration) infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ======  premium (planLevel = 3)  ====== */
+.marker[data-plan="3"] {
+  width: 28px;
+  height: 28px;
+}
+.marker[data-plan="3"]::before {
+  background: var(--plan-premium-bg);
+  box-shadow: var(--plan-premium-glow);
+  animation: premiumPulse var(--plan-premium-pulse-duration) ease-in-out infinite;
+}
+.marker[data-plan="3"]::after {
+  border-color: var(--plan-premium-border);
+  animation: rippleWave var(--plan-intermediario-ring-duration) infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes premiumPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.08); }
+}
+
+@keyframes rippleWave {
+0%   { transform: scale(0.6); opacity: 0.8; }
+100% { transform: scale(2.4); opacity: 0; }
+}
+
+@keyframes initialPulse {
+0%   { transform: scale(1); opacity: 1; }
+50%  { transform: scale(1.1); opacity: 0.7; }
+100% { transform: scale(1); opacity: 1; }
+}

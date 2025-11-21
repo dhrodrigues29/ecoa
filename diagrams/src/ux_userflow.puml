@@ -1,0 +1,117 @@
+@startuml
+title UX-STYLE USER FLOW DIAGRAM
+
+' Style settings for cleaner visual flow
+skinparam rectangle {
+  BackgroundColor #f9f9f9
+  BorderColor #555
+  BorderThickness 2
+  RoundCorner 15
+}
+skinparam note {
+  BackgroundColor #fff8dc
+  BorderColor #999
+}
+skinparam arrow {
+  Color #333
+  FontSize 12
+}
+
+rectangle "🌐 Access URL" as Access_URL {
+  [User opens browser and types project URL]
+}
+
+rectangle "🏠 Home Screen" as Home_Screen {
+  [Search Bar]  
+  [Enter Button]  
+  [Become Partner Button]  
+
+  note bottom
+    Visible elements from start
+  end note
+}
+
+rectangle "🗺️ Map Screen" as Map_Screen {
+  [Search Bar]  
+  [Enter Button]  
+  [Advanced Search Button]  
+  [Tags List]  
+  [POI Markers]  
+  [Zoom Controls]  
+  [Back Button]
+  
+  note bottom
+    Map interactive via mouse
+    Invalid searches → Popup "No Matches"
+    Clicking POI → Full Card
+  end note
+}
+
+rectangle "🤝 Partner Screen" as Partner_Screen {
+  [Search Bar]  
+  [Instagram Search Bar]  
+  [Contact Input Box]  
+  [Plan Buttons (3)]  
+  [Continue to Payment]  
+  [See It on Map]  
+  [Back to Home]
+
+  note bottom
+    Continue to Payment + See It on Map enabled
+    only after all inputs filled + plan selected
+  end note
+}
+
+rectangle "💳 Confirm Payment Screen" as Confirm_Payment {
+  [Credit Tab]  
+  [Pix Tab]  
+  [Boleto Tab]  
+  [Back to Partner]  
+  [Confirm Payment Button]
+
+  note bottom
+    Credit tab requires form filled correctly
+    Pix and Boleto → Confirm always visible
+    Popup: "Payment Confirmed, Thank You!"
+  end note
+}
+
+rectangle "📍 POI Full Card" as POI_Card {
+  [POI Info Display]
+  [X Button to close]
+}
+
+rectangle "🔍 Advanced Search Window" as Adv_Search {
+  [Tag Tabs]
+  [Search Tag Bar]
+  [Search / Cancel / Close Buttons]
+}
+
+' --- FLOW CONNECTIONS ---
+
+Access_URL --> Home_Screen : Open Project
+
+Home_Screen --> Map_Screen : "Click Enter" (carry: SearchQuery|null)
+Home_Screen --> Map_Screen : "Type & Press Enter" (carry: SearchQuery)
+Home_Screen --> Partner_Screen : "Click Become Partner"
+
+Partner_Screen --> Confirm_Payment : "Click Continue to Payment" (carry: PartnerInfo)
+Partner_Screen --> Map_Screen : "Click See It on Map" (Preview Mode)
+Partner_Screen --> Home_Screen : "Click Back" (retain state)
+
+Confirm_Payment --> Home_Screen : "Click Confirm Payment"
+note right of Confirm_Payment
+  Popup: "Payment Confirmed, Thank You!"
+end note
+
+Map_Screen --> Home_Screen : "Click Back" (retain state)
+Map_Screen --> Adv_Search : "Click Advanced Search"
+Map_Screen --> POI_Card : "Click POI Marker"
+
+Adv_Search --> Map_Screen : "Search" (carry: SelectedTags)
+Adv_Search --> Map_Screen : "Cancel" (reset filters)
+Adv_Search --> Map_Screen : "Close" (retain selections)
+
+POI_Card --> Map_Screen : "Click X"
+
+@enduml

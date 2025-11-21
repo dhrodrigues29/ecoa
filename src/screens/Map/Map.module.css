@@ -1,0 +1,154 @@
+/* ==========================================
+   MAP MODULE – organised & future-proof
+   ========================================== */
+
+/* ---- 1.  LAYOUT SHELLS  ------------------------------------------- */
+.mapScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- 2.  UI CHROME  ----------------------------------------------- */
+.topLeftBar {
+  position: absolute;
+  top: 1rem;
+  left: var(--gutter);
+  z-index: calc(var(--z-map-ui) + 1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 70%;
+  pointer-events: none;
+}
+.topLeftBar > * {
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .topLeftBar {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+  }
+}
+
+.loader {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0008;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.backHome {
+  position: absolute;
+  bottom: 1rem;
+  left: var(--gutter);
+  z-index: calc(var(--z-map-ui) + 1);
+  padding: var(--space-xs) var(--space-md);
+  font-size: var(--fs-sm);
+  border-radius: 2rem;
+  background: var(--color-surface);
+  color: var(--color-action);
+  border: 1px solid var(--color-action);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+.backHome:hover {
+  background: var(--color-action);
+  color: #fff;
+}
+/* ---- 3.  POI MARKER DESIGN-SYSTEM  -------------------------------- */
+.poiMarker {
+  width: 20px;
+  height: 20px;
+  border: none;
+  cursor: pointer;
+   background: transparent; 
+  /* position: relative; activate this makes the markers jump around and not be fixed */
+  transition:
+    filter 0.3s ease,
+    width 0.3s ease,
+    height 0.3s ease;
+}
+
+/* ----------  base dot  ---------- */
+.poiMarker::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--plan-none-bg);           /* plan-0 (none) */
+  box-shadow: var(--plan-none-glow);
+}
+
+/* ----------  ripple  ---------- */
+.poiMarker::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--plan-none-border);
+  animation: rippleWave 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ----------  plan colours (data-plan="0|1|2|3")  ---------- */
+.poiMarker[data-plan="1"]::before {
+  background: var(--plan-basico-bg);
+  box-shadow: var(--plan-basico-glow);
+}
+
+.poiMarker[data-plan="1"]::after {
+  border-color: var(--plan-basico-border);
+}
+
+.poiMarker[data-plan="2"] {
+  width: 24px;
+  height: 24px;
+}
+
+.poiMarker[data-plan="2"]::before {
+  background: var(--plan-intermediario-bg);
+  box-shadow: var(--plan-intermediario-glow);
+}
+.poiMarker[data-plan="2"]::after {
+  border-color: var(--plan-intermediario-border);
+}
+
+.poiMarker[data-plan="3"] {
+  width: 28px;
+  height: 28px;
+}
+.poiMarker[data-plan="3"]::before {
+  background: var(--plan-premium-bg);
+  box-shadow: var(--plan-premium-glow);
+}
+.poiMarker[data-plan="3"]::after {
+  border-color: var(--plan-premium-border);
+}
+
+
+/* ----------  active state – darken the current plan colour  ---------- */
+.poiMarker.poiMarker--active::before {
+  filter: brightness(0.75) saturate(1.2);
+  box-shadow: 0 0 0 3px rgba(0,0,0,.25);
+}
+.poiMarker.poiMarker--active::after {
+  filter: brightness(0.75) saturate(1.2);
+  animation-duration: 1s !important;
+}
+
+/* ----------  ripple keyframes  ---------- */
+@keyframes rippleWave {
+  0%   { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}

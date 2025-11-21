@@ -1,0 +1,1 @@
+export { ActiveTagsBar } from './ActiveTagsBar';

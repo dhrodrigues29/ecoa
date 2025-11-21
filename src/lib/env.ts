@@ -1,0 +1,4 @@
+// src/lib/env.ts
+export const SUPABASE_URL = 'https://gtrcvvrlioyejseltnxs.supabase.co';
+export const SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0cmN2dnJsaW95ZWpzZWx0bnhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk0OTgxNzgsImV4cCI6MjA3NTA3NDE3OH0.AKzjEEJUmgh_q5oKSlaIAiwFCv6J5vGHvqeXiov2tEk';

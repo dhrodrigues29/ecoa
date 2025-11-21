@@ -1,0 +1,1 @@
+export { TagBar } from './TagBar';

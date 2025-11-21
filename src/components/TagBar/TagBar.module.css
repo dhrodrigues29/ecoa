@@ -1,0 +1,78 @@
+/* TagBar.module.css – pixel-tight version, tags fit perfectly inside */
+@import '/src/styles/vars.css';
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+  height: clamp(2.1rem, 4vw, 2.25rem); /* slightly taller to contain tag height */
+}
+
+.advanced {
+  flex: 0 0 auto;
+  height: 1.6rem; /* exact button height to fit inside bar */
+  padding: 0 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  border-radius: 0.9rem;
+  background: rgba(139, 90, 214, 0.4);
+  color: var(--text-inverse);
+  border: 1px solid var(--purple-400);
+  box-shadow: 0 0 4px rgba(139, 90, 214, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+.advanced:hover {
+  background: rgba(139, 90, 214, 0.55);
+  border-color: var(--purple-300);
+}
+
+.scroll {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  overflow-x: auto;
+  scrollbar-width: none;
+  height: 100%;
+  mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 12px), transparent 100%);
+}
+.scroll:active {
+  cursor: grabbing;
+}
+
+.tag {
+  flex: 0 0 auto;
+  height: 1.6rem; /* ensures it always fits inside the bar */
+  padding: 0 0.5rem; /* minimal horizontal padding */
+  font-size: 0.75rem;
+  line-height: 1;
+  border-radius: 0.9rem;
+  background: rgba(139, 90, 214, 0.4); /* vivid, but not heavy */
+  color: var(--text-inverse);
+  border: 1px solid var(--purple-400);
+  box-shadow: 0 0 2px rgba(139, 90, 214, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.tag:hover {
+  background: rgba(100, 12, 233, 0.6);
+  border-color: var(--purple-300);
+}
+
+.tag.pressed {
+  background: rgb(102, 0, 255);
+  border-color: var(--purple-200);
+  box-shadow: 0 0 8px rgba(86, 54, 134, 0.45);
+}

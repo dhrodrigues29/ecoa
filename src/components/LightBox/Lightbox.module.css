@@ -1,0 +1,62 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: grid;
+  place-items: center;
+  z-index: var(--z-modal);
+}
+
+.content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.image {
+  display: block;
+  max-width: 90vw;   /* never wider than viewport */
+  max-height: 90vh;  /* never taller than viewport */
+  width: auto;       /* keep original ratio */
+  height: auto;      /* keep original ratio */
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 1;
+}
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid rgba(255,255,255,.45);
+  border-radius: 50%;
+  background: rgba(0,0,0,.35);
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+  transition: background .25s, border-color .25s;
+}
+.arrow:hover{
+  background: rgba(0,0,0,.55);
+  border-color: rgba(255,255,255,.75);
+}
+.arrowLeft{left: 1.5rem;}
+.arrowRight{right: 1.5rem;}

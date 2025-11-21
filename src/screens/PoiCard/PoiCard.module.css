@@ -1,0 +1,384 @@
+@import '/src/styles/vars.css';
+
+.card{
+  --_width: 320px;
+  --_height: 420px;
+  --_radius: 8px;                              /* = var(--space-sm) */
+  --_shadow: 0 8px 24px rgba(0,0,0,.15);
+  --_bg: var(--neutral-100);                                 /* = var(--color-surface) */
+  --_text: #222;                               /* = var(--color-text-main-main) */
+  --_action: #a316b2;                          /* = var(--color-action) */
+  --_action-hover: #420b49;                    /* = var(--color-action-hover) */
+  --_space-xs: 0.25rem;
+  --_space-sm: 0.5rem;
+  --_space-md: 1rem;
+  --_transition: .3s ease;
+}
+
+/* 2.  CARD SHELL  ENTRANCE */
+.card{
+  position: relative;
+  width: var(--_width);
+  height: var(--_height);
+  background: var(--_bg);
+  border-radius: var(--_radius);
+  box-shadow: var(--_shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  max-height: 80vh;
+  transform: translateY(var(--_space-md)) scale(.95);
+  transition: opacity var(--_transition), transform var(--_transition);
+}
+.card.active{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+/* =====  PLAN CARD THEMES  ===== */
+.cardBasico,
+.cardIntermediario,
+.cardPremium{
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
+}
+
+.cardBasico{
+  background: var(--plan-basico-bg);
+  border: 2px solid var(--plan-basico-border);
+  box-shadow: var(--plan-basico-glow), 0 12px 40px rgba(0,0,0,.25);
+}
+.cardIntermediario{
+  background: var(--plan-intermediario-bg);
+  border: 2px solid var(--plan-intermediario-border);
+  box-shadow: var(--plan-intermediario-glow), 0 12px 40px rgba(0,0,0,.25);
+}
+.cardPremium{
+  background: var(--plan-premium-bg);
+  border: 2px solid var(--plan-premium-border);
+  box-shadow: var(--plan-premium-glow), 0 12px 40px rgba(0,0,0,.25);
+}
+/* =====  metallic-gradient titles + contrast-safe labels  ===== */
+.cardBasico .title{
+  background: linear-gradient(160deg, #ffe7c2 0%, #c57a46 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cardIntermediario .title{
+  background: linear-gradient(160deg, #e6f7ff 0%, #a8b2c1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cardPremium .title{
+  background: linear-gradient(160deg, #fff8e1 0%, #f5c542 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cardBasico .row label,
+.cardIntermediario .row label{ color: rgba(255 255 255 /.92); }
+.cardPremium .row label{ color: rgba(42 22 2 /.92); }
+
+.cardBasico .row span,
+.cardIntermediario .row span{ color: rgba(255 255 255 /.78); }
+.cardPremium .row span{ color: rgba(255 255 255 /.78); }
+
+.cardBasico .link,
+.cardIntermediario .link{ color: #fff; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+.cardPremium .link{ color: var(--magenta-800); }
+
+.tagList { display: flex; flex-wrap: wrap; gap: .25rem; margin: .5rem 0; }
+.tag {
+padding: .25rem .5rem;
+font-size: var(--fs-xs);
+background: rgba(255,255,255,.25);
+border-radius: 1rem;
+color: inherit;
+}
+
+/* 3.  CONTENT BLOCKS */
+.media {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 0 0 var(--_radius) var(--_radius);
+}
+
+.body{
+  padding: calc(var(--_space-md) - var(--_radius)) var(--_space-md) var(--_space-md);
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--_space-xs);
+}
+
+.title{
+  font-size: 1rem;
+  color: var(--_text);
+  line-height: 1.4;
+}
+
+.link{
+  text-decoration: underline;
+  color: var(--_action);
+  margin-top: auto;          /* push to bottom */
+}
+
+
+/* 5.  CLOSE BUTTON (top-right) */
+.close{
+  position: absolute;
+  top: var(--_space-sm);
+  right: var(--_space-sm);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0,0,0,.55);
+  color: #fff;
+  font-size: 1.2rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 3;
+  transition: background .2s;
+}
+.close:hover{background: rgba(0,0,0,.75);}
+
+/* 6.  PREV / NEXT SIDE ARROWS */
+.prev, .next{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.75rem;
+  height: 10rem;
+  border: none;
+  background: var(--color-action);
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 15;
+  transition: background var(--_transition), transform .2s;
+}
+.prev{left: calc(50% - 190px); border-radius: 50% 0 0 50%;}
+.next{right: calc(50% - 190px); border-radius: 0 50% 50% 0;}
+.prev:hover, .next:hover{background: var(--color-action-hover); transform: translateY(-50%) scale(1.05);}
+.prev:active, .next:active{transform: translateY(-50%) scale(.98);}
+
+/* =====  PLAN NAV-BUTTONS  ===== */
+.prev.prev.cardBasico,   /* double class = higher specificity */
+.next.next.cardBasico{
+  background: var(--plan-basico-bg);
+  border: 1px solid var(--plan-basico-border);
+  box-shadow: var(--plan-basico-glow);
+}
+.prev.prev.cardIntermediario,
+.next.next.cardIntermediario{
+  background: var(--plan-intermediario-bg);
+  border: 1px solid var(--plan-intermediario-border);
+  box-shadow: var(--plan-intermediario-glow);
+}
+.prev.prev.cardPremium,
+.next.next.cardPremium{
+  background: var(--plan-premium-bg);
+  border: 1px solid var(--plan-premium-border);
+  box-shadow: var(--plan-premium-glow);
+}
+
+/* 7.  stacked data list */
+.grid {
+  margin-top: var(--space-md);
+  font-size: var(--fs-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.row {
+  display: block;
+}
+
+.row label {
+  display: block;
+  font-weight: 600;
+  color: var(--color-action); /* purple */
+  text-transform: capitalize;
+  margin-bottom: var(--space-xs);
+}
+
+.row span {
+  display: block;
+  color: var(--color-text-main-soft); /* grey */
+  word-break: break-word;
+}
+
+/* 8.  PEEK BAR (bottom pill) */
+.peekBar{
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translate(-50%, calc(100%  2rem));
+  background: #fff;
+  border-radius: 2rem;
+  padding: .5rem .75rem .5rem .5rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+  z-index: calc(var(--z-map)  2);
+  max-width: 85vw;
+  cursor: pointer;
+}
+
+.peekExpand{
+  width: 1.75rem;
+  height: 1.75rem;
+  border: none;
+  background: var(--_action);
+  color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background .2s;
+}
+.peekExpand:hover{background: var(--_action-hover);}
+
+/* 9.  RESPONSIVE TWEAKS */
+@media (max-width: 400px){
+  .card{ width: 90vw; }
+  .prev{ left: .5rem; }
+  .next{ right: .5rem; }
+}
+
+.poiCard {
+  position: fixed;
+  inset: 0;
+  pointer-events: none; /* map stays interactive underneath */
+  z-index: var(--z-map-ui);
+}
+.peekBar,
+.fullCard {
+  pointer-events: auto; /* only cards catch clicks */
+}
+
+.fullCard {
+  position: fixed;
+  inset: auto 0 15vh 0; /* pinned to bottom, 15 % above viewport base */
+  height: 420px; /* keep exact window size */
+  margin: 0 auto;
+  width: min(90vw, 320px);
+  pointer-events: auto;
+  z-index: calc(var(--z-map-ui)  1);
+}
+
+.wrapper {
+  position: absolute;
+  display: grid;
+  top: 20vh;
+  left: 15vh;
+  place-items: center;
+  pointer-events: auto; /* grab all clicks for this subtree */
+  z-index: calc(var(--z-map-ui)  1);
+}
+
+.scrollBox {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-right: var(--space-xs); /* room for scrollbar */
+}
+
+.toolbar {
+  position: absolute;
+  top: 1rem;
+  right: 3rem;
+  z-index: 10;
+}
+.destaqueBtn {
+  padding: 0.4rem 0.8rem;
+  font-size: var(--fs-xs);
+  border: 1px solid var(--color-action);
+  background: transparent;
+  color: var(--color-action);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.destaqueBtnOn {
+  background: var(--color-action);
+  color: var(--text-inverse);
+}
+/* =====  BASICO  –  slow drifting glint  ===== */
+.cardBasico::before{
+  content:""; position:absolute; inset:-50%; width:200%; height:200%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(255 255 255 /.35) 0%, transparent 60%);
+  animation: drift 7s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes drift{
+  0%,100%{ transform: translateY(20%) scaleY(.8); opacity: 0; }
+  50%    { transform: translateY(-5%) scaleY(1); opacity: 1; }
+}
+
+/* =====  INTERMEDIARIO  –  inner pulse  ===== */
+.cardIntermediario::before{
+  content:""; position:absolute; inset:0; border-radius:inherit;
+  background: radial-gradient(circle, rgba(255 255 255 /.25) 0%, transparent 60%);
+  animation: innerPulse 3s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes innerPulse{
+  0%,100%{ transform: scale(1); opacity: .3; }
+  50%    { transform: scale(1.08); opacity: .7; }
+}
+
+/* =====  PREMIUM  –  twin stars  ===== */
+.cardPremium::before,
+.cardPremium::after{
+  content:"✦"; position:absolute; font-size:1.2rem;
+  color: var(--plan-premium-border);
+  filter: drop-shadow(0 0 4px var(--plan-premium-glow));
+  animation: burst 2.4s ease-out infinite;
+  pointer-events:none;
+}
+.cardPremium::before{ left:15%; top:20%; animation-delay:0s; }
+.cardPremium::after { right:15%; bottom:20%; animation-delay:1.2s; }
+@keyframes burst{
+  0%{ transform: scale(0) rotate(0deg); opacity:1; }
+  50%{ transform: scale(1.2) rotate(180deg); }
+  100%{ transform: scale(0) rotate(360deg); opacity:0; }
+}
+
+.pubBtn {
+  margin: var(--space-xs) 0 0 0;          /* left-align, small gap under title */
+  padding: var(--space-xs) var(--space-sm);
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--magenta-500) 0%, var(--purple-500) 100%);
+  color: var(--text-inverse);
+  font-family: var(--font-roboto);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 2px 8px -2px var(--magenta-700);
+  transition: transform .2s, box-shadow .2s;
+  width: fit-content;
+}
+.pubBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px -2px var(--magenta-700);
+}
+.pubBtn:active {
+  transform: scale(.98);
+}
