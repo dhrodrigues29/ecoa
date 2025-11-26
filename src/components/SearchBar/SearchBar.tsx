@@ -23,7 +23,7 @@ export function SearchBar({
   onSearch,
   onTagSelect,
   onTitlePick,
-  placeholder = 'Busque por eventos, tags ou estabelecimento...',
+  placeholder = 'Busque por eventos ou estabelecimento...',
 }: Props) {
   const [open, setOpen]   = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);

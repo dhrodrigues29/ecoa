@@ -76,3 +76,25 @@
   border-color: var(--purple-200);
   box-shadow: 0 0 8px rgba(86, 54, 134, 0.45);
 }
+
+.advancedBar {
+  margin-top: 0.5rem;
+  width: 100%;
+  display: flex;
+}
+
+.advancedInput {
+  flex: 1 1 auto;
+  height: 2rem;
+  padding: 0 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid var(--purple-400);
+  background: rgba(139, 90, 214, 0.2);
+  color: var(--text-inverse);
+  font-size: 0.875rem;
+  outline: none;
+}
+.advancedInput::placeholder { color: rgba(255,255,255,.7); }
+.advancedInput:focus {
+  box-shadow: 0 0 0 2px rgba(255,255,255,.35);
+}
