@@ -329,3 +329,64 @@
 @media (min-width: 1440px) {
   .content { max-width: 1280px; }
 }
+
+/* 8. SEARCH-BAR OVERRIDES – make it look like .idInput
+----------------------------------------------------------- */
+/* wrapper – kill the outer glass pen */
+.inputCard .idBox [class*="wrap"] {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+/* input field – clone .idInput rules */
+.inputCard .idBox [class*="input"] {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 2px solid var(--purple-600);
+  border-radius: 6px;
+  font-size: var(--fs-base);
+  background: var(--color-surface);
+  color: #222;
+  text-align: center;
+  outline: none;
+  height: auto;          /* same height as siblings */
+}
+.inputCard .idBox [class*="input"]::placeholder {
+  color: var(--color-text-main-soft);
+}
+
+/* hide the little arrow button */
+.inputCard .idBox [class*="cap"] {
+  display: none;
+}
+
+/* dropdown – keep it inside the card, same border vibe */
+.inputCard .idBox [class*="dropdown"] {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 2px;
+  max-height: 160px;
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: 2px solid var(--purple-600);
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.2);
+  z-index: 10;
+}
+
+/* single dropdown row */
+.inputCard .idBox [class*="dropdown"] li {
+  padding: .45rem .75rem;
+  font-size: var(--fs-base);
+  color: #222;
+  cursor: pointer;
+  text-align: center;
+}
+.inputCard .idBox [class*="dropdown"] li:hover {
+  background: var(--purple-700);
+  color: #fff;
+}

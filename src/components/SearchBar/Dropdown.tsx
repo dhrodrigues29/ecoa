@@ -14,13 +14,15 @@ export function Dropdown<T>({ items, render, onPick, open }: Props<T>) {
   const ref = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    if (!open) return;
-    const handler = (e: MouseEvent) => {
-      if (ref.current?.contains(e.target as Node)) return;
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [open]);
+  if (!open) return;
+  const handler = (e: MouseEvent) => {
+    /* do NOT close if the click happened inside the list */
+    if (ref.current?.contains(e.target as Node)) return;
+    /* otherwise let the outer SearchBar close us */
+  };
+  document.addEventListener('mousedown', handler);
+  return () => document.removeEventListener('mousedown', handler);
+}, [open]);
 
   if (!open || !items.length) return null;
 

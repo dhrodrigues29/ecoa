@@ -6,6 +6,7 @@ import { containerVariants } from "./Partner.animations";
 import styles from "./Partner.module.css";
 import { useState, useEffect } from "react";
 import { searchTitles } from "../../lib/search";
+import { SearchBar } from '../../components/SearchBar';
 import {
   getPartnerForm,
   setPartnerForm,
@@ -32,23 +33,21 @@ const PLANS: Plan[] = [
     value: 0,
     title: "Sem Plano", // <- unaccented
     price: "Grátis",
-    perks: ["Visibilidade padrão"],
+    perks: ["Visibilidade padrão", "Informações básicas"],
   },
   {
     value: 29.9,
     title: "Basico", // <- unaccented
     price: "R$29,90",
-    perks: ["Evento listado por 7 dias", "1 foto de capa", "Visibilidade alta"],
+    perks: ["Visibilidade elevada", "Informações básicas", "Destaque visual básico"],
   },
   {
     value: 59.9,
     title: "Intermediario", // <- unaccented
     price: "R$59,90",
     perks: [
-      "Evento listado por 30 dias",
-      "3 fotos",
       "Visibilidade superior",
-      "Link para WhatsApp",
+      "Informações básicas e publicações recentes do Instagram", "Destaque visual Intermediário",
     ],
   },
   {
@@ -56,11 +55,8 @@ const PLANS: Plan[] = [
     title: "Premium", // already unaccented
     price: "R$99,90",
     perks: [
-      "Evento listado por 90 dias",
-      "Galeria completa",
       "Visibilidade máxima",
-      "Link para WhatsApp",
-      "Destaque na home",
+      "Informações básicas e publicações recentes do Instagram", "Destaque visual Premium",
     ],
   },
 ];
@@ -145,35 +141,40 @@ export default function Partner() {
           <div className={styles.topRow}>
             <div className={styles.inputCard}>
               <div className={styles.idBox}>
-                <label>Selecione o estabelecimento</label>
-                <input
-                  className={styles.idInput}
-                  type="text"
-                  placeholder="Nome do seu estabelecimento"
-                  value={form.poiInput ?? form.poi?.titulo ?? ""}
-                  onChange={(e) =>
-                    setForm((f) => ({
-                      ...f,
-                      poi: null,
-                      poiInput: e.target.value,
-                    }))
-                  }
-                  onBlur={(e) =>
-                    searchTitles(e.target.value, 1).then(
-                      (res) =>
-                        res[0] &&
-                        setForm((f) => ({
-                          ...f,
-                          poi: { ...res[0], lat: 0, lon: 0 },
-                          poiInput: undefined,
-                        }))
-                    )
-                  }
-                />
-              </div>
+  <label>Informe o seu estabelecimento</label>
+  <SearchBar
+    mode="title"
+    placeholder="Nome do seu estabelecimento"
+    value={form.poiInput ?? form.poi?.titulo ?? ""}
+    onChange={(v) =>
+      setForm((f) => ({ ...f, poi: null, poiInput: v }))
+    }
+    onSearch={(v) => {
+      /* keep the old blur behaviour: auto-pick first result */
+      searchTitles(v, 1).then((res) => {
+        if (res[0])
+          setForm((f) => ({
+            ...f,
+            poi: { ...res[0], lat: 0, lon: 0 },
+            poiInput: undefined,
+          }));
+      });
+    }}
+    onTitlePick={(titulo) =>
+      searchTitles(titulo, 1).then((res) => {
+        if (res[0])
+          setForm((f) => ({
+            ...f,
+            poi: { ...res[0], lat: 0, lon: 0 },
+            poiInput: undefined,
+          }));
+      })
+    }
+  />
+</div>
 
               <div className={styles.idBox}>
-                <label>Selecione seu Instagram</label>
+                <label>Informe seu Instagram</label>
                 <input
                   className={styles.idInput}
                   type="text"

@@ -39,17 +39,7 @@ export default function PlanCard({
         ))}
       </ul>
 
-      {isComplete && (
-        <button
-          className={styles.previewBtn}
-          onClick={(e) => {
-            e.stopPropagation(); // prevent card selection
-            onPreview?.();
-          }}
-        >
-          Ver no mapa
-        </button>
-      )}
+      {isComplete }
     </motion.button>
   );
 }

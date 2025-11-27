@@ -46,6 +46,7 @@ export default function Home() {
                 value={query}
                 onChange={setQuery}
                 onSearch={() => handleSearch({ preventDefault: () => {} } as any)}
+                disableDropdown
                 placeholder="Busque pela sua cidade, cep ou nome do estabelcimento"
               />
               </div>
