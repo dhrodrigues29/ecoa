@@ -5,8 +5,9 @@ import PlanCard from "./PlanCard";
 import { containerVariants } from "./Partner.animations";
 import styles from "./Partner.module.css";
 import { useState, useEffect } from "react";
-import { searchTitles } from "../../lib/search";
+import { searchTitles, planCache } from "../../lib/search";
 import { SearchBar } from '../../components/SearchBar';
+
 import {
   getPartnerForm,
   setPartnerForm,
@@ -100,8 +101,14 @@ export default function Partner() {
   }, [form]);
 
   const selectPlan = (planKey: string, value: number) => {
-    setForm((f) => ({ ...f, plan: { key: planKey, value } }));
-  };
+  setForm(f => ({ ...f, plan: { key: planKey, value } }));
+
+  /* mock: remember the new plan for this POI */
+  if (form.poi) {
+    const planId = { semplano: 0, basico: 1, intermediario: 2, premium: 3 }[planKey] ?? 0;
+    planCache.set(form.poi.id, planId);
+  }
+};
 
   const goBack = () => pop();
 
@@ -150,16 +157,16 @@ export default function Partner() {
       setForm((f) => ({ ...f, poi: null, poiInput: v }))
     }
     onSearch={(v) => {
-      /* keep the old blur behaviour: auto-pick first result */
-      searchTitles(v, 1).then((res) => {
-        if (res[0])
-          setForm((f) => ({
-            ...f,
-            poi: { ...res[0], lat: 0, lon: 0 },
-            poiInput: undefined,
-          }));
-      });
-    }}
+  searchTitles(v, 1).then((res) => {
+    if (res[0]) {
+      setForm((f) => ({
+        ...f,
+        poi: { ...res[0], lat: 0, lon: 0 },
+        // poiInput: undefined   // ← DELETE THIS LINE
+      }));
+    }
+  });
+}}
     onTitlePick={(titulo) =>
       searchTitles(titulo, 1).then((res) => {
         if (res[0])

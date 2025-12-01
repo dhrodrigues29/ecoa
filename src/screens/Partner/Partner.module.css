@@ -362,21 +362,6 @@
   display: none;
 }
 
-/* dropdown – keep it inside the card, same border vibe */
-.inputCard .idBox [class*="dropdown"] {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  margin-top: 2px;
-  max-height: 160px;
-  overflow-y: auto;
-  background: var(--color-surface);
-  border: 2px solid var(--purple-600);
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0,0,0,.2);
-  z-index: 10;
-}
 
 /* single dropdown row */
 .inputCard .idBox [class*="dropdown"] li {
@@ -389,4 +374,17 @@
 .inputCard .idBox [class*="dropdown"] li:hover {
   background: var(--purple-700);
   color: #fff;
+}
+
+/* Partner search dropdown – make it visible again */
+.inputCard .idBox [class*="dropdown"] {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Partner search dropdown – restore visibility */
+.inputCard .idBox > div:first-child {
+  overflow: visible !important;   /* let the list pop out */
 }

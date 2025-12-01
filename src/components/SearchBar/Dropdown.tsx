@@ -10,7 +10,7 @@ type Props<T> = {
 };
 
 export function Dropdown<T>({ items, render, onPick, open }: Props<T>) {
-  if (!open || !items.length) return null;
+  //if (!open || !items.length) return null;
   const ref = useRef<HTMLUListElement>(null);
 
   useEffect(() => {

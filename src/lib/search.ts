@@ -1,28 +1,35 @@
 // src/lib/search.ts
 import { supabase } from './supabase';
 
+export const planCache = new Map<number, number>(); 
+
+
 export async function searchTitles(q: string, limit = 4) {
   if (!q) return [];
 
-  /* 1. starts-with (case-insensitive) */
   const { data: start } = await supabase
     .from('lugares')
-    .select('id,titulo')
+    .select('id,titulo,plan_id')
     .ilike('titulo', `${q}%`)
     .limit(limit);
 
-  /* 2. general contains – skip the ones we already have */
   const { data: rest } = await supabase
     .from('lugares')
-    .select('id,titulo')
+    .select('id,titulo,plan_id')
     .ilike('titulo', `%${q}%`)
-    .not('titulo', 'ilike', `${q}%`)   // de-duplicate
+    .not('titulo', 'ilike', `${q}%`)
     .limit(limit - (start?.length ?? 0));
 
-  return [
+  const merged = [
     ...(start ?? []),
     ...(rest ?? [])
   ].slice(0, limit);
+
+  /* merge cached plan (if any) – still read-only */
+  return merged.map(r => ({
+    ...r,
+    plan_id: planCache.get(r.id) ?? r.plan_id
+  }));
 }
 
 export async function searchTags(q: string, limit = 6) {
