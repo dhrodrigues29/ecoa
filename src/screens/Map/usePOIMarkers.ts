@@ -1,4 +1,3 @@
-// src/screens/Map/usePOIMarkers.ts
 import { useState, useEffect, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import { supabase } from '../../lib/supabase';
@@ -22,7 +21,7 @@ if (!window.__activeMarkerId) window.__activeMarkerId = null;
 
 export default function usePOIMarkers(map: maplibregl.Map | null, pois: POI[]) {
   const markerRef = useRef<maplibregl.Marker[]>([]);
-  const { push } = useRouter();
+  const { push, replace, stack } = useRouter();
   const [activeMarkerId, setActiveMarkerId] = useState(window.__activeMarkerId);
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function usePOIMarkers(map: maplibregl.Map | null, pois: POI[]) {
     const wanted = new Set(pois.map(p => p.id));
 
     markerRef.current = markerRef.current.filter(m => {
-      const ll  = m.getLngLat();
+      const ll = m.getLngLat();
       const raw = window.__rawPOIs.find(r => r.latitude === ll.lat && r.longitude === ll.lng);
       if (!raw || !wanted.has(raw.id)) {
         m.remove();
@@ -45,7 +44,7 @@ export default function usePOIMarkers(map: maplibregl.Map | null, pois: POI[]) {
     });
 
     markerRef.current.forEach(m => {
-      const ll  = m.getLngLat();
+      const ll = m.getLngLat();
       const raw = window.__rawPOIs.find(r => r.latitude === ll.lat && r.longitude === ll.lng);
       if (!raw) return;
 
@@ -72,7 +71,7 @@ export default function usePOIMarkers(map: maplibregl.Map | null, pois: POI[]) {
     const existingIds = new Set(
       markerRef.current
         .map(m => {
-          const ll  = m.getLngLat();
+          const ll = m.getLngLat();
           const raw = window.__rawPOIs.find(r => r.latitude === ll.lat && r.longitude === ll.lng);
           return raw?.id;
         })
@@ -82,8 +81,10 @@ export default function usePOIMarkers(map: maplibregl.Map | null, pois: POI[]) {
     pois.forEach(p => {
       if (existingIds.has(p.id)) return;
 
-      const el  = document.createElement('button');
+      const el = document.createElement('button');
       el.dataset.plan = String(p.plan_level ?? 0);
+      if (el.dataset.listener) return;
+      el.dataset.listener = '1';
       const isActive = p.id === window.__activeMarkerId;
       const shouldBeVisible = wanted.has(p.id) || isActive;
 
@@ -106,12 +107,18 @@ export default function usePOIMarkers(map: maplibregl.Map | null, pois: POI[]) {
         const cardArray = window.__currentViewportPOIs.map(formatCard);
         const idx = window.__currentViewportPOIs.findIndex(v => v.id === p.id);
 
-        map.flyTo({ center: [p.longitude, p.latitude], zoom: 16 });
-        map.once('moveend', () =>
-          Promise.resolve().then(() =>
-            push('poi-card', { map, cardArray, initialIndex: idx })
-          )
-        );
+
+        let pushTimeout: ReturnType<typeof setTimeout> | null = null;
+
+        if (pushTimeout) clearTimeout(pushTimeout);
+        pushTimeout = setTimeout(() => {
+          map.flyTo({ center: [p.longitude, p.latitude], zoom: 16 });
+          const isCardOpen = stack.at(-1)?.screen === 'poi-card';
+          const nav = isCardOpen ? replace : push;
+          map.once('moveend', () =>
+            nav('poi-card', { map, cardArray, initialIndex: idx })
+          );
+        }, 50);
       });
 
       const mk = new maplibregl.Marker({ element: el, anchor: 'bottom' })
@@ -166,6 +173,6 @@ export function formatCard(p: POI) {
     tags: p.tags,
     img: `/img/poi/${p.id}.jpg`,
     url: p.telefone ? `tel:${p.telefone}` : '#',
-    raw:  { ...p, tags },
+    raw: { ...p, tags },
   };
 }

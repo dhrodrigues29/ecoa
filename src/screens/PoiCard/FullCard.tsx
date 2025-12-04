@@ -87,7 +87,7 @@ export default function FullCard({ card, onClose, onNext, onPrev }: Props) {
     onClose();
   };
 
-    return (
+  return (
     <div id="card-wrapper" className={styles.wrapper}>
       <button
         id="card-prev"
@@ -103,7 +103,7 @@ export default function FullCard({ card, onClose, onNext, onPrev }: Props) {
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
       >
-        {/* publication lightbox with arrows */}
+
         <Lightbox
           src={finalPubs[pubIndex]}
           open={pubLightbox}
@@ -123,7 +123,7 @@ export default function FullCard({ card, onClose, onNext, onPrev }: Props) {
           </button>
         </Lightbox>
 
-        {/* main-image lightbox */}
+
         <Lightbox
           src={card.img}
           open={mainLightbox}
@@ -140,17 +140,19 @@ export default function FullCard({ card, onClose, onNext, onPrev }: Props) {
         </button>
 
         <div id="card-body" className={`${styles.body} ${styles.scrollBox}`}>
-          {/* main-image button (only one) */}
           <button
             className={styles.imgBtn}
             onClick={() => setMainLightbox(true)}
           >
-            <LazyImg
-              id="card-img"
-              className={styles.media}
-              src={card.img}
-              alt=""
-            />
+            <div className={styles.imgBox}>
+              <LazyImg
+                id="card-img"
+                className={styles.media}
+                src={card.img}
+                alt=""
+                placeholder="/assets/fallback.png"
+              />
+            </div>
           </button>
 
           <strong id="card-title" className={styles.title}>

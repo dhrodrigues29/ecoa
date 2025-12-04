@@ -382,3 +382,5 @@ color: inherit;
 .pubBtn:active {
   transform: scale(.98);
 }
+
+.imgBox{ height:220px; width:100%; background:var(--neutral-200); }
